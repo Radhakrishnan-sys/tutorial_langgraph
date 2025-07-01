@@ -25,7 +25,7 @@ class state(TypedDict):
     messages: Annotated[list, add_messages]
     message_type:str | None
 
-def classify_message(state: state):
+def classify_message(state: state): #This function classifies whether the user message is emotional or logical.
     last_message = state["messages"][-1]
     classifier_llm=llm.with_structured_output(MessageClassifier)
 
@@ -42,7 +42,8 @@ def classify_message(state: state):
     return {"message_type": result.message_type}
 
 
-def router(state:state):
+def router(state:state):#if it is emotional we route to the therapist agent, if it is logical we route to the logical agent.
+    # We check the message_type in the state to determine the next step.
     message_type= state.get("message_type", "logical")
     if message_type == "emotional":
         return {"next": "therapist"}
@@ -50,7 +51,8 @@ def router(state:state):
         return {"next": "logical"}
     
 
-def therapist_agent(state: state):
+def therapist_agent(state: state):# This function handles emotional messages and provides empathetic responses.
+    # It uses the LLM to generate a compassionate reply based on the user's last message.
     last_message = state["messages"][-1]
     messages=[
         {"role": "system",
@@ -65,7 +67,8 @@ def therapist_agent(state: state):
     reply= llm.invoke(messages)
     return {"messages": [{"role": "assistant", "content": reply.content}]}
 
-def logical_agent(state: state):
+def logical_agent(state: state):# This function handles logical messages and provides factual, straightforward responses.
+    # It uses the LLM to generate a direct reply based on the user's last message.
     last_message = state["messages"][-1]
     messages=[
         {"role": "system",
@@ -80,18 +83,23 @@ def logical_agent(state: state):
     reply= llm.invoke(messages)
     return {"messages": [{"role": "assistant", "content": reply.content}]}
 
-graph_builder=StateGraph(state)
+graph_builder=StateGraph(state)# We create a state graph to manage the flow of the chatbot.
+# We add nodes to the graph for each function we defined above.
+# Each node represents a step in the conversation flow.
 
 graph_builder.add_node("classifier", classify_message)
 graph_builder.add_node("router", router)
 graph_builder.add_node("therapist", therapist_agent)
 graph_builder.add_node("logical", logical_agent)
 
+# We define the edges of the graph to connect the nodes and define the flow of the conversation.
+# The edges represent the transitions between different states in the conversation.
 graph_builder.add_edge(START, "classifier")
 graph_builder.add_edge("classifier", "router")   
 
 
-
+# We add conditional edges based on the output of the router function.
+# The router function determines the next step based on the message type.
 graph_builder.add_conditional_edges(
     "router",
     lambda state: state.get("next"),
@@ -104,11 +112,12 @@ graph_builder.add_conditional_edges(
 graph_builder.add_edge("therapist", END)
 graph_builder.add_edge("logical", END)
 
-
+# We compile the graph to create a runnable chatbot.
+# The compiled graph will manage the state transitions and invoke the appropriate functions based on user input.
 graph=graph_builder.compile()
 
 
-def run_chatbot():
+def run_chatbot():# This function runs the chatbot, allowing the user to interact with it.
     state={"messages": [], "message_type": None}#we take the initial state
 
     while True:
@@ -131,5 +140,6 @@ def run_chatbot():
 
 
 if __name__ == "__main__":
-    run_chatbot()
+    run_chatbot()# This is the main function that runs the chatbot when the script is executed.
+    # It initializes the chatbot and starts the conversation loop.
 
