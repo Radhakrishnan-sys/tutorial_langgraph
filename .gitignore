@@ -1,0 +1,68 @@
+# created by virtualenv automatically
+.env
+__pycache__
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]   
+__pycache__/
+*.pyo
+*.pyd
+# C extensions
+*.so
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+# Unit test / coverage reports
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+# Translations
+*.mo
+*.pot
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+# Flask stuff:
+instance/
+.webassets-cache
+# Scrapy stuff:
+.scrapy
+# Sphinx documentation
+docs/_build/
+# PyBuilder
+target/
+# Jupyter Notebook
+.ipynb_checkpoints
+# IPython
+profile_default/
+# pyenv
+.python-version 
+# pipenv
+Pipfile.lock
+# poetry
+
+# pyright
+pyrightconfig.json
+# mypy
+.mypy_cache/
+

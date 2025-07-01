@@ -1,0 +1,22 @@
+[project]
+name = "langgrapg_tutorial"
+version = "0.1.0"
+description = "youtube video learning langgraph"
+authors = [
+    {name = "Radhakrishnan-sys",email = "work.connectwithkrishna@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10,<4.0"
+package-mode = false
+dependencies = [
+    "ipykernel (>=6.29.5,<7.0.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "langgraph (>=0.5.0,<0.6.0)",
+    "langchain[anthropic] (>=0.3.26,<0.4.0)",
+    "langchain-openai (>=0.3.27,<0.4.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
