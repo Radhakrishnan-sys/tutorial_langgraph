@@ -15,7 +15,7 @@ llm=init_chat_model(
 
 #Structured output parser:
 
-class MessageClassifier(BaseModel):
+class MessageClassifier(BaseModel):# This class defines the structure of the output we expect from the LLM.
     message_type: Literal["emotional", "logical"] = Field(
         ...,
         description="Classify if the message requires an emotional(therapist) or logical response. "
